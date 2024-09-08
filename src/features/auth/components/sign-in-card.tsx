@@ -12,14 +12,38 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SignInFlow } from "../types";
 import { useState } from "react";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { TriangleAlert } from "lucide-react";
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void;
 }
 
 export const SignInCard = ({ setState }: SignInCardProps) => {
+  const [loading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const { signIn } = useAuthActions();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSignInProvider = (value: "google" | "github") => {
+    setIsLoading(true);
+    signIn(value).finally(() => {
+      setIsLoading(false);
+    });
+  };
+
+  const onSignInSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    signIn("password", { email, password, flow: "signIn" })
+      .catch((e) => {
+        setError("Invalid email or password");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <Card className="h-full w-full p-8">
@@ -30,10 +54,17 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         </CardDescription>
       </CardHeader>
 
+      {!!error && (
+        <div className="bg-destructive/15 p-3 flex items-center rounded-md gap-x-2 tex-sm text-destructive mb-6">
+          <TriangleAlert className="size-4" />
+          <p>{error}</p>
+        </div>
+      )}
+
       <CardContent className="space-y-5 px-0 pb-0">
-        <form className="space-y-2.5">
+        <form className="space-y-2.5" onSubmit={onSignInSubmit}>
           <Input
-            disabled={false}
+            disabled={loading}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
@@ -41,14 +72,19 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
             required
           />
           <Input
-            disabled={false}
+            disabled={loading}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
             required
           />
-          <Button type="submit" className="w-full" size={"lg"} disabled={false}>
+          <Button
+            type="submit"
+            className="w-full"
+            size={"lg"}
+            disabled={loading}
+          >
             Continue
           </Button>
         </form>
@@ -57,9 +93,11 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           <Button
             variant={"outline"}
             className="w-full relative"
-            onClick={() => {}}
+            onClick={() => {
+              handleSignInProvider("google");
+            }}
             size={"lg"}
-            disabled={false}
+            disabled={loading}
           >
             <FcGoogle className="size-5 absolute top-3 left-2.5" />
             Continue with Google
@@ -67,9 +105,11 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           <Button
             variant={"outline"}
             className="w-full relative"
-            onClick={() => {}}
+            onClick={() => {
+              handleSignInProvider("github");
+            }}
             size={"lg"}
-            disabled={false}
+            disabled={loading}
           >
             <FaGithub className="size-5 absolute top-3 left-2.5" />
             Continue with Github
