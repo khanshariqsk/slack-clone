@@ -3,10 +3,8 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 import { Input } from "@/components/ui/input";
@@ -53,6 +51,7 @@ export const CreateWorkSpaceModal = () => {
             required
             autoFocus
             minLength={3}
+            maxLength={80}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Workspace name e.g. 'Work','Personal','Home'"
