@@ -10,16 +10,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-// import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useCreateChannelModal } from "../store/use-create-channel-modal";
+import { useCreateChannel } from "../api/use-create-channel";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
 export const CreateChannelModal = () => {
   const [name, setName] = useState<string>("");
   const [open, setOpen] = useCreateChannelModal();
-  // const { mutate, isPending } = useCreateWorkspace();
+  const { mutate, isPending } = useCreateChannel();
   const router = useRouter();
+  const workspaceId = useWorkspaceId();
 
   const handleClose = () => {
     setOpen(false);
@@ -32,17 +34,20 @@ export const CreateChannelModal = () => {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // e.preventDefault();
-    // mutate(
-    //   { name },
-    //   {
-    //     onSuccess: (id) => {
-    //       router.push(`/workspace/${id}`);
-    //       handleClose();
-    //       toast.success("Workspace created");
-    //     },
-    //   }
-    // );
+    e.preventDefault();
+    mutate(
+      { name, workspaceId },
+      {
+        onSuccess: (id) => {
+          router.push(`/workspace/${workspaceId}/channel/${id}`);
+          handleClose();
+          toast.success("Channel created");
+        },
+        onError: () => {
+          toast.error("Failed to create channel");
+        },
+      }
+    );
   };
 
   return (
@@ -53,7 +58,7 @@ export const CreateChannelModal = () => {
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
-            // disabled={isPending}
+            disabled={isPending}
             required
             autoFocus
             minLength={3}
@@ -63,11 +68,7 @@ export const CreateChannelModal = () => {
             placeholder="e.g. plan-budget"
           />
           <div className="flex justify-end">
-            <Button
-            // disabled={isPending}
-            >
-              Create
-            </Button>
+            <Button disabled={isPending}>Create</Button>
           </div>
         </form>
       </DialogContent>

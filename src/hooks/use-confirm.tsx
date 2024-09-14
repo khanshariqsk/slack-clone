@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 
-export const useConfim = (
+export const useConfirm = (
   title: string,
   message: string
 ): [() => JSX.Element, () => Promise<unknown>] => {

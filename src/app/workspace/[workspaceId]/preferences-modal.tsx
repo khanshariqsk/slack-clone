@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspace";
 import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
-import { useConfim } from "@/hooks/use-confirm";
+import { useConfirm } from "@/hooks/use-confirm";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
 import { TrashIcon } from "lucide-react";
@@ -43,7 +43,7 @@ const PreferencesModal = ({
 
   const workspaceId = useWorkspaceId();
 
-  const [ConfirmDialog, onConfirm] = useConfim(
+  const [ConfirmDialog, onConfirm] = useConfirm(
     "Are you sure?",
     "This action is irreversible."
   );
