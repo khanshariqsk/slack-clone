@@ -40,7 +40,7 @@ const Renderer = ({ value }: RendererProps) => {
 
   if (isEmpty) return null;
 
-  return <div ref={rendererRef} className="ql-editor ql-renderer " />;
+  return <div ref={rendererRef} className="ql-editor ql-renderer mr-8" />;
 };
 
 export default Renderer;

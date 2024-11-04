@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 const userItemVariants = cva(
   "flex items-center gap-1.5 justify-start font-normal h-7 px-4 text-sm overflow-hidden",
@@ -36,6 +37,9 @@ export const UserItem = ({
 }: UserItemProps) => {
   const workspaceId = useWorkspaceId();
   const avatarFallback = label.charAt(0).toUpperCase();
+
+  const { data: currentMember } = useCurrentMember({ workspaceId });
+
   return (
     <Button
       variant={"transparent"}
@@ -50,7 +54,7 @@ export const UserItem = ({
             {avatarFallback}
           </AvatarFallback>
         </Avatar>
-        <span className="text-sm truncate">{label}</span>
+        <span className="text-sm truncate">{label} {currentMember?._id === id && "(You)"}</span>
       </Link>
     </Button>
   );
