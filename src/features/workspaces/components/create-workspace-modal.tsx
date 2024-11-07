@@ -9,7 +9,7 @@ import {
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -19,11 +19,18 @@ export const CreateWorkSpaceModal = () => {
   const [open, setOpen] = useCreateWorkspaceModal();
   const { mutate, isPending } = useCreateWorkspace();
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClose = () => {
     setOpen(false);
     setName("");
   };
+
+  useEffect(() => {
+    if (open && inputRef.current) {
+      inputRef.current.focus(); // Set focus on input
+    }
+  }, [open]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,9 +54,9 @@ export const CreateWorkSpaceModal = () => {
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
+            ref={inputRef}
             disabled={isPending}
             required
-            autoFocus
             minLength={3}
             maxLength={80}
             value={name}

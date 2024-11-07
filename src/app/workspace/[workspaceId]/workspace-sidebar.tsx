@@ -65,10 +65,10 @@ export const WorkspaceSidebar = () => {
         workspace={workspace}
         isAdmin={member.role === "admin"}
       />
-      {/* <div className="flex flex-col px-2 mt-3">
-        <SidebarItem icon={MessageSquareText} id="threads" label="Threads" />
-        <SidebarItem icon={SendHorizonal} id="drafts" label="Drafts & Sent" />
-      </div> */}
+      <div className="flex flex-col px-2 mt-3">
+        <SidebarItem icon={MessageSquareText} label="Threads" />
+        <SidebarItem icon={SendHorizonal} label="Drafts" />
+      </div>
       <WorkspaceSection
         hint="New Channel"
         label="Channels"
@@ -84,11 +84,7 @@ export const WorkspaceSidebar = () => {
           />
         ))}
       </WorkspaceSection>
-      <WorkspaceSection
-        hint="New direct message"
-        label="Direct Messages"
-        onNew={() => {}}
-      >
+      <WorkspaceSection hint="New direct message" label="Direct Messages">
         {members?.map((memberItem) => (
           <UserItem
             key={memberItem._id}

@@ -28,7 +28,7 @@ export const WorkspaceSection = ({
           onClick={toggle}
         >
           <FaCaretDown
-            className={cn("size-4 transition-transform", on && "-rotate-90")}
+            className={cn("size-4 transition-transform", !on && "-rotate-90")}
           />
         </Button>
 
@@ -36,6 +36,7 @@ export const WorkspaceSection = ({
           className="group px-1.5 text-sm text-[#f9edffcc] h-[28px] justify-start overflow-hidden items-center"
           size="sm"
           variant="transparent"
+          onClick={toggle}
         >
           <span className="truncate">{label}</span>{" "}
         </Button>

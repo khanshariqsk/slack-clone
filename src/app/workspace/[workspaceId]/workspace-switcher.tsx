@@ -62,7 +62,11 @@ export const WorkspaceSwitcher = () => {
         ))}
         <DropdownMenuItem
           className="cursor-pointer"
-          onClick={() => setOpen(true)}
+          onClick={() =>
+            setTimeout(() => {
+              setOpen(true);
+            }, 0)
+          }
         >
           <div className="size-9 relative overflow-hidden bg-[#F2F2F2] text-slate-800 font-semibold text-lg rounded-md flex justify-center items-center mr-2">
             <Plus />

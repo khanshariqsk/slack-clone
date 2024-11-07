@@ -27,8 +27,8 @@ export default function RootLayout({
           <NuqsAdapter>
             <ConvexClientProvider>
               <JotaiProvider>
-                <Toaster />
                 <Modals />
+                <Toaster />
                 {children}
               </JotaiProvider>
             </ConvexClientProvider>

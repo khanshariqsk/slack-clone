@@ -53,13 +53,13 @@ export const create = mutation({
 
     if (existingMessageReactionFromUser) {
       await ctx.db.delete(existingMessageReactionFromUser._id);
-     
+
       return existingMessageReactionFromUser._id;
     } else {
       const newReactionId = await ctx.db.insert("reactions", {
         workspaceId: message.workspaceId,
         messageId: args.messageId,
-        memberId: message.memberId,
+        memberId: member._id,
         value: args.value,
       });
 

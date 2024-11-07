@@ -212,7 +212,6 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
               const observer = new IntersectionObserver(
                 ([entry]) => {
                   if (entry.isIntersecting && canLoadMore) {
-                    console.log("interacting");
                     loadMore();
                   }
                 },

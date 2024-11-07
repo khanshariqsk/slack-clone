@@ -14,7 +14,6 @@ interface ThumbnailProps {
 
 export const Thumbnail = ({ url }: ThumbnailProps) => {
   if (!url) return null;
-  console.log({ url });
   return (
     <Dialog>
       <div className="relative overflow-hidden max-w-[360px] border rounded-lg my-2 cursor-zoom-in">

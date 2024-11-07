@@ -42,7 +42,6 @@ export const ChatInput = ({ placeholder, conversationId }: ChatInputProps) => {
     image: File | null;
     body: string;
   }) => {
-    console.log({ image, body });
 
     setIsPending(true);
     editorRef?.current?.enable(false);

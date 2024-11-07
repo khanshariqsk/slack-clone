@@ -68,7 +68,9 @@ export const WorkspaceHeader = ({
                 <DropdownMenuItem
                   className="cursor-pointer py-2"
                   onClick={() => {
-                    setInviteOpen(true);
+                    setTimeout(() => {
+                      setInviteOpen(true);
+                    }, 0);
                   }}
                 >
                   Invite people to {workspace.name}
@@ -77,7 +79,9 @@ export const WorkspaceHeader = ({
                 <DropdownMenuItem
                   className="cursor-pointer py-2"
                   onClick={() => {
-                    setPreferencesOpen(true);
+                    setTimeout(() => {
+                      setPreferencesOpen(true);
+                    }, 0);
                   }}
                 >
                   Preferences
